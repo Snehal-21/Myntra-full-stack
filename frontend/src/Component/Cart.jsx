@@ -26,7 +26,7 @@ const Cart = () => {
             <div>
                 <div>
                     <img src="https://constant.myntassets.com/checkout/assets/img/sprite-secure.png"
-                        alt="security-image" />
+                        alt="" />
                     <p>100% SECURE</p>
                 </div>
             </div>

@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import '../Style/Home.css';
+import { AuthContext } from './Context/AuthContext';
 
 const Home = () => {
+
+    const {state} = useContext(AuthContext);
     return (
         <>
             <div id="mainscreen">
@@ -40,7 +43,7 @@ const Home = () => {
                 <div id="screen-right-tags">
                     <div >
                         <i class="fa-regular fa-user "></i>
-                        <h5 id="switch">Profile</h5>
+                        <h5 id="switch">{state?.user?.name}</h5>
                     </div>
 
                     <div>
