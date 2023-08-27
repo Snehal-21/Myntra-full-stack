@@ -28,12 +28,12 @@ const Login = () => {
                 if(data.success){
                     dispatch({
                         type:"LOGIN",
-                        payload:response.data.user
+                        payload:response?.data?.user
                     })
                     localStorage.setItem("myntrajwtToken",JSON.stringify(data.token));
                    
                     toast.success(data.message);
-                    // router('/home');
+                    router('/home');
                 }
             } catch (error) {
                 if(!error.response.data.success){
