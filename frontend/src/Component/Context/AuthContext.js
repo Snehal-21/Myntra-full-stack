@@ -26,7 +26,7 @@ const HandleAuthContext=({children})=>{
     useEffect(()=>{
         const token=JSON.parse(localStorage.getItem("myntrajwtToken"));
         async function getCurrentUser(){
-
+            if(token){
             const response=await axios.post("http://localhost:8000/app/getCurrentUser",{token});
             if(response.data.success){
                 dispatch({
@@ -34,6 +34,7 @@ const HandleAuthContext=({children})=>{
                     payload:response.data.user
                 })
             }
+        }
         }getCurrentUser();
     },[])
 

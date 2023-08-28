@@ -33,7 +33,7 @@ const Login = () => {
                     localStorage.setItem("myntrajwtToken",JSON.stringify(data.token));
                    
                     toast.success(data.message);
-                    router('/home');
+                    router('/');
                 }
             } catch (error) {
                 if(!error.response.data.success){
