@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import toast from "react-hot-toast";
 import { useNavigate } from 'react-router-dom';
-import axios from "axios";
+// import axios from "axios";
 import "../Style/Register.css";
+import api from '../Apiconfig';
 
 const Register = () => {
 
@@ -17,7 +18,7 @@ const Register = () => {
         e.preventDefault();
         if(userData.name && userData.email && userData.password && userData.confirmpassword){
             try {
-                const response=await axios.post("http://localhost:8000/app/register",{
+                const response=await api.post("/register",{
                     name:userData.name,
                     email:userData.email,
                     password:userData.password,

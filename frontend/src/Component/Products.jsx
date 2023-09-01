@@ -1,7 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../Style/Products.css';
+// import { useNavigate } from 'react-router-dom';
+import api from '../Apiconfig';
+import toast from "react-hot-toast";
 
 const Products = () => {
+    const [products,setProducts]=useState();
+    // const router=useNavigate();
+
+    useEffect(()=>{
+        async function getProducts(){
+            try {
+                const response=await api.get('/getMyntra');
+                console.log(response,"response")
+                if(response.data.success){
+                    setProducts(response.data.products)
+                }
+            } catch (error) {
+                toast.error(error.response.data.message);
+            }
+        }getProducts();
+    },[])
   return (
     <>
      <div id="mainscreen">
@@ -145,8 +164,19 @@ const Products = () => {
             </div>
             <div id="products">
             <div  id="product-body-info">
-                <div id="product-body-main-info">
-                    <div>
+                {products?.length ?<div id="product-body-main-info">
+
+                {products.map((product)=>(
+                    <div style={{border:"1px solid lightgray"}}>
+                    <img src={product.productImage} alt="prod-img"/>
+                    <h1 style={{textAlign:"center",marginTop:"10px"}}>{product.productName}</h1>
+                    {/* <p>Printed Pure Cotton T-shirt</p> */}
+                    <p style={{textAlign:"center",marginTop:"10px"}}>Rs.{product.productPrice}</p>
+                    </div>
+                ))}
+
+
+                    {/* <div>
                         <img src="https://assets.myntassets.com/f_webp,dpr_1.5,q_60,w_210,c_limit,fl_progressive/assets/images/1700871/2020/1/22/f932ae44-0fb8-4b92-b7bc-f1756253294b1579692118186-HRX-by-Hrithik-Roshan-Men-Teal-Blue-Printed-T-shirt-90515796-1.jpg" alt="prod-img"/>
                         <h1>HRX by Hrithik Roshan</h1>
                         <p>Printed Pure Cotton T-shirt</p>
@@ -385,8 +415,8 @@ const Products = () => {
                         <h1>HRX by Hrithik Roshan</h1>
                         <p>Printed Pure Cotton T-shirt</p>
                         <p><b>Rs.279&nbsp;</b><del>Rs.699</del><span>&nbsp;&nbsp;(60% OFF)</span></p>
-                    </div>
-                </div>
+                    </div> */}
+                </div>:<h1>Products not found</h1>}
             </div> 
             </div>
         </div>
