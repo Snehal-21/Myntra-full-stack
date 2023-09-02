@@ -3,10 +3,11 @@ import '../Style/Products.css';
 // import { useNavigate } from 'react-router-dom';
 import api from '../Apiconfig';
 import toast from "react-hot-toast";
+import { useNavigate } from 'react-router-dom';
 
 const Products = () => {
-    const [products,setProducts]=useState();
-    // const router=useNavigate();
+    const [products,setProducts]=useState([]);
+    const router=useNavigate();
 
     useEffect(()=>{
         async function getProducts(){
@@ -26,7 +27,7 @@ const Products = () => {
      <div id="mainscreen">
         <div id="screen">
             <div>
-                <img src="https://english.cdn.zeenews.com/sites/default/files/styles/zm_700x400/public/2021/01/30/913689-1.1.4-2.jpg?im=Resize=(1280,720)"
+                <img  src="https://english.cdn.zeenews.com/sites/default/files/styles/zm_700x400/public/2021/01/30/913689-1.1.4-2.jpg?im=Resize=(1280,720)"
                     alt="sreen-logo" />
 
             </div>
@@ -167,7 +168,7 @@ const Products = () => {
                 {products?.length ?<div id="product-body-main-info">
 
                 {products.map((product)=>(
-                    <div style={{border:"1px solid lightgray"}}>
+                    <div onClick={() => router(`/singleProduct/${product._id}`)} style={{border:"1px solid lightgray"}}>
                     <img src={product.productImage} alt="prod-img"/>
                     <h1 style={{textAlign:"center",marginTop:"10px"}}>{product.productName}</h1>
                     {/* <p>Printed Pure Cotton T-shirt</p> */}

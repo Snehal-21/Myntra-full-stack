@@ -29,7 +29,7 @@ const Home = () => {
                         <div>
                             <h3>MEN</h3>
                         </div>
-                        <div style={{ cursor: 'pointer' }} onclick="window.location.href=`./product.html`">
+                        <div style={{ cursor: 'pointer' }} onClick={()=>router('/products')}>
                             <h3>WOMEN</h3>
                         </div>
                         <div>

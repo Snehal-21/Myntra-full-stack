@@ -1,8 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../Style/SingleProduct.css';
 import AuthProtected from './AuthProtected/Authprotected';
+import { useParams } from 'react-router-dom';
+import toast from "react-hot-toast";
+import api from '../Apiconfig';
 
 const SingleProduct = () => {
+
+    const [product,setProduct]=useState();
+
+    const {id}=useParams();
+
+    useEffect(()=>{
+        async function getSingleProduct(){
+            try {
+                const response=await api.post('/getSingleMyntra',{id})
+                if(response.data.success){
+                    setProduct(response.data.product);
+                }
+            } catch (error) {
+                toast.error(error.data.response.message);
+            }
+        }getSingleProduct();
+    },[id])
 
   return (
     <>
@@ -60,28 +80,28 @@ const SingleProduct = () => {
             <p>Home / Clothing / Men Clothing / Tshirts / <b id="name">Minions By Kook N Keech Tshirts  More By Minions
                     By Kook N Keech</b></p>
         </div>
-        <div id="productmain">
+       {product ? <div id="productmain">
             <div id="product-img">
                 <div><img
-                        src="https://assets.myntassets.com/h_1440,q_90,w_1080/v1/assets/images/8923841/2019/6/3/736b9f2c-3a49-41a9-828c-1e0218b62e431559550212164-Minions-by-Kook-N-Keech-Men-Purple-Printed-Round-Neck-T-shir-1.jpg"
+                        src={product.productImage}
                         alt="img-1" /></div>
                 <div><img
-                        src="https://assets.myntassets.com/h_720,q_90,w_540/v1/assets/images/8923841/2019/6/3/a21db48e-5fa4-4bd6-8a52-203745f247611559550212145-Minions-by-Kook-N-Keech-Men-Purple-Printed-Round-Neck-T-shir-2.jpg"
+                        src={product.productImage}
                         alt="img-1" /></div>
                 <div><img
-                        src="https://assets.myntassets.com/h_720,q_90,w_540/v1/assets/images/8923841/2019/6/3/7d2bb3b5-b6a9-4cac-ab1f-814071ac32f11559550212123-Minions-by-Kook-N-Keech-Men-Purple-Printed-Round-Neck-T-shir-3.jpg"
+                        src={product.productImage}
                         alt="img-1" /></div>
                 <div><img
-                        src="https://assets.myntassets.com/h_720,q_90,w_540/v1/assets/images/8923841/2019/6/3/c8e2c851-ad44-4623-9df0-b03995554c431559550212101-Minions-by-Kook-N-Keech-Men-Purple-Printed-Round-Neck-T-shir-4.jpg"
+                        src={product.productImage}
                         alt="img-1" /></div>
                 <div><img
-                        src="https://assets.myntassets.com/h_720,q_90,w_540/v1/assets/images/8923841/2019/6/3/361af51e-4174-419c-aebc-3bb80120d8f31559550212090-Minions-by-Kook-N-Keech-Men-Purple-Printed-Round-Neck-T-shir-5.jpg"
+                        src={product.productImage}
                         alt="img-1" /></div>
             </div>
             <div id="product-info">
                 <div>
-                    <h1 id="name">Minions by Kook N Keech</h1>
-                    <p>Men Purple Boxy Fit Printed Round Neck Pure Cotton T-shirt</p>
+                    <h1 id="name">{product.productName}</h1>
+                    {/* <p>Men Purple Boxy Fit Printed Round Neck Pure Cotton T-shirt</p> */}
                     <div>
                         <p><b>4.2 <i class="fa-solid fa-star"></i></b>| 2.8k Ratings</p>
                     </div>
@@ -89,7 +109,7 @@ const SingleProduct = () => {
 
 
                 <div>
-                    <p><span id="price">₹571 </span><span>MRP <del>₹1099</del></span> <span> (48% OFF)</span></p>
+                    <p><span id="price">₹{product.productPrice} </span><span>MRP <del>₹1099</del></span> <span> (48% OFF)</span></p>
                     <p>inclusive of all taxes</p>
                     <p><span>SELECT SIZE</span><span>SIZE CHART&nbsp;&nbsp;&nbsp;</span></p>
                     <div>
@@ -217,7 +237,7 @@ const SingleProduct = () => {
 
 
             </div>
-        </div>
+        </div> :<div>loading....</div> }
     </div>
         </AuthProtected>
     </>
