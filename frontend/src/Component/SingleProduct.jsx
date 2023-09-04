@@ -1,15 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import '../Style/SingleProduct.css';
 import AuthProtected from './AuthProtected/Authprotected';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import toast from "react-hot-toast";
 import api from '../Apiconfig';
+import { AuthContext } from './Context/AuthContext';
 
 const SingleProduct = () => {
 
     const [product,setProduct]=useState();
-
+    const router=useNavigate();
     const {id}=useParams();
+    const {state}=useContext(AuthContext);
+
+    async function addCart(){
+        try {
+            const response=await api.post("/addToMyntraCart",{userId:state?.user?._id,productId:id});
+            if(response.data.success){
+                toast.success(response.data.message);
+            }
+        } catch (error) {
+            toast.error(error.response.data.message);
+        }
+    }
 
     useEffect(()=>{
         async function getSingleProduct(){
@@ -66,7 +79,7 @@ const SingleProduct = () => {
                     <h5 id="switch">Profile</h5>
                 </div>
 
-                <div>
+                <div onClick={()=>router('/cart')}>
                     <i class="fa-regular fa-bag-shopping "></i>
                     <h5 style={{paddingLeft:'5px'}}>Bag</h5>
                 </div>
@@ -130,7 +143,7 @@ const SingleProduct = () => {
                         </div>
                     </div>
                     <div id="cart">
-                        <button><i class="fa-solid fa-bag-shopping"></i>ADD TO BAG</button>
+                        <button onClick={addCart}><i class="fa-solid fa-bag-shopping"></i>ADD TO BAG</button>
                         <button><i class="fa-regular fa-heart"></i>WHISLIST</button>
                     </div>
                 </div>

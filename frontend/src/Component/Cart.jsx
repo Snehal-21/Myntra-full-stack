@@ -1,7 +1,30 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import '../Style/Cart.css';
+import { useNavigate } from 'react-router-dom';
+import api from '../Apiconfig';
+import toast from "react-hot-toast";
+import { AuthContext } from './Context/AuthContext';
 
 const Cart = () => {
+    const [cartproducts, setCartProducts] = useState([]);
+    const { state } = useContext(AuthContext);
+    console.log(state);
+    const router=useNavigate();
+
+    useEffect(() => {
+        async function getCartProducts() {
+            try {
+                const response = await api.post('/getMyntraCartProducts', { userId: state?.user?._id });
+                console.log(response);
+                if (response.data.success) {
+                    setCartProducts(response.data.cartProducts);
+                }
+            } catch (error) {
+                toast.error(error.response.data.message)
+            }
+        } getCartProducts();
+    },[state]);
+    console.log(cartproducts)
   return (
     <>
      <div id="mainscreen">
@@ -11,7 +34,7 @@ const Cart = () => {
                     alt="myntra-logo" />
             </div>
             <div>
-                <div>
+                <div >
                     <p><u>BAG</u></p>
                 </div>
                 <div></div>
@@ -125,27 +148,34 @@ const Cart = () => {
             </div>
         </div>  */}
         <div class="cartSection">
+        {cartproducts?.length ?
             <div id="leftCart" class="leftCart">
-                 <div class="innerCart">
+                
+                {cartproducts.map((product)=>(
+                    <div class="innerCart">
                     <div class="prodImage">
                         <div class="prodImagePos">
-                            <img src="https://assets.myntassets.com/f_webp,dpr_1.5,q_60,w_210,c_limit,fl_progressive/assets/images/7546900/2019/1/24/c9be0d6e-30a4-4242-b4e0-1c166b73f2781548320874402-HERENOW-Men-Polo-Collar-T-shirt-4861548320873235-1.jpg" alt="" />
+                            <img src={product.productImage} alt="" />
                         </div>
                     </div>
                     <div class="prodDesc">
-                        <h1 style={{fontSize:'18px'}}>HERE&NOW</h1>
-                        <p style={{fontSize:'16px'}}>HERENOW Men Navy Polo Collar Cotton Pure Cotton T-shirt</p>
+                        <h1 style={{fontSize:'18px'}}>{product.productName}</h1>
+                        // <p style={{fontSize:'16px'}}>HERENOW Men Navy Polo Collar Cotton Pure Cotton T-shirt</p>
                         <p style={{fontSize:'14px'}}>Sold by:Omnitech Retail</p>
                         <div>
                             <button>Size:M<i class="fa-solid fa-caret-down"></i></button>
                             <button>Qty:1<i class="fa-solid fa-caret-down"></i></button>
                         </div>
-                        <p style={{fontSize:'14px'}} class="prodPrice">Rs 779 <del>Rs.1299</del><span> 40%OFF</span></p>
+                        <p style={{fontSize:'14px'}} class="prodPrice">Rs {product.productPrice} <del>Rs.1299</del><span> 40%OFF</span></p>
                         <p style={{fontSize:'16px'}} class="prodReturn"><i class="fa-solid fa-rotate-left"></i><b>14
                                 days</b> Return available</p>
                     </div>
                 </div> 
-            </div>
+                ))}
+                
+              
+            </div>  :<div>Loading...</div>
+                }
         </div>
         <div class="rightCart"></div>
     </div>
