@@ -23,6 +23,23 @@ const reducer =(state,action)=>{
 const HandleAuthContext=({children})=>{
     const [state,dispatch]=useReducer(reducer,intialState);
 
+    const login =(userData)=>{
+        if(userData.token){
+            localStorage.setItem("myntrajwtToken",JSON.stringify(userData.token));
+        }
+        dispatch({
+            type:"LOGIN",
+            payload:userData.payload
+        })
+    }
+    
+    const logout=()=>{
+        localStorage.removeItem("myntrajwtToken");
+        dispatch({
+            type:"LOGOUT"
+        })
+    }
+
     useEffect(()=>{
         const token=JSON.parse(localStorage.getItem("myntrajwtToken"));
         async function getCurrentUser(){
@@ -39,7 +56,7 @@ const HandleAuthContext=({children})=>{
     },[])
 
     return(
-        <AuthContext.Provider value={{state, dispatch}}>
+        <AuthContext.Provider value={{state, login,logout}}>
             {children}
         </AuthContext.Provider>
     )

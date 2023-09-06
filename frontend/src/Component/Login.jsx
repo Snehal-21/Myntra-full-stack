@@ -8,7 +8,7 @@ import api from '../Apiconfig';
 const Login = () => {
 
     const [userData,setUserData]=useState({email:"",password:""});
-    const {state, dispatch}=useContext(AuthContext);
+    const {state, login}=useContext(AuthContext);
     console.log(state,"State from context into login component");
 
     const router=useNavigate();
@@ -27,11 +27,10 @@ const Login = () => {
                 });
                 const data=response.data;
                 if(data.success){
-                    dispatch({
-                        type:"LOGIN",
-                        payload:response?.data?.user
-                    })
-                    localStorage.setItem("myntrajwtToken",JSON.stringify(data.token));
+                    login({
+                        token:data?.token,
+                        payload:data?.user
+                      })
                    
                     toast.success(data.message);
                     router('/');

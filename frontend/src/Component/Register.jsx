@@ -7,7 +7,7 @@ import api from '../Apiconfig';
 
 const Register = () => {
 
-    const [userData,setUserData]=useState({name:"",email:"",password:"",confirmpassword:""});
+    const [userData,setUserData]=useState({name:"",email:"",password:"",confirmpassword:"",role:"Buyer"});
     const router=useNavigate();
 
     const handleChange=(e)=>{
@@ -22,7 +22,8 @@ const Register = () => {
                     name:userData.name,
                     email:userData.email,
                     password:userData.password,
-                    confirmpassword:userData.confirmpassword
+                    confirmpassword:userData.confirmpassword,
+                    role:userData.role
                 });
                 const data=response.data;
                 if(data.success){
@@ -52,6 +53,12 @@ const Register = () => {
                 <input onChange={handleChange} type="email" name='email' placeholder="Enter Email.."/>
                 <input onChange={handleChange} type="password" name='password' placeholder="Enter Password.."/>
                 <input onChange={handleChange} type="password" name='confirmpassword' placeholder="Enter Confirm Password.."/>
+                <div>
+                           <select onChange={handleChange} name='role'>
+                            <option value="Buyer">Buyer</option>
+                            <option value="Seller">Seller</option>
+                           </select>
+                        </div>
                 <input  type="submit" value="Sign Up" />
             </form>
         </div>

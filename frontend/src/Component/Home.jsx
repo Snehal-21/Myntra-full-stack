@@ -1,25 +1,25 @@
-import React, { useContext } from 'react';
-import '../Style/Home.css';
-import { AuthContext } from './Context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+// import '../Style/Home.css';
+// import { AuthContext } from './Context/AuthContext';
+// import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
 
-    const { state,dispatch } = useContext(AuthContext);
-    const router=useNavigate();
-    const userName=state?.user?.name;
-    const Logout=()=>{
-        dispatch({
-            type:"LOGOUT"
-        })
-    }
-    const Login=()=>{
-        router('/login');
-    }
+    // const { state,dispatch } = useContext(AuthContext);
+    // const router=useNavigate();
+    // const userName=state?.user?.name;
+    // const Logout=()=>{
+    //     dispatch({
+    //         type:"LOGOUT"
+    //     })
+    // }
+    // const Login=()=>{
+    //     router('/login');
+    // }
     return (
         <>
             <div id="mainscreen">
-                <div id="screen">
+                {/* <div id="screen">
                     <div>
                         <img src="https://english.cdn.zeenews.com/sites/default/files/styles/zm_700x400/public/2021/01/30/913689-1.1.4-2.jpg?im=Resize=(1280,720)"
                             alt="sreen-logo" />
@@ -67,7 +67,7 @@ const Home = () => {
                             <h5>Logout</h5>
                         </div>
                     </div>
-                </div>
+                </div> */}
                 <div id="slider">
                     <img src="https://assets.myntassets.com/f_webp,w_980,c_limit,fl_progressive,dpr_2.0/assets/images/2022/7/28/84b6a214-9eb3-49eb-9f9d-72cec56ec5d71659019908592-Indian-Wear_DK--1-.jpg"
                         alt="slider" />

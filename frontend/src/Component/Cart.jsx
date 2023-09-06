@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import api from '../Apiconfig';
 import toast from "react-hot-toast";
 import { AuthContext } from './Context/AuthContext';
+import AuthProtected from './AuthProtected/Authprotected';
 
 const Cart = () => {
     const [cartproducts, setCartProducts] = useState([]);
@@ -27,7 +28,8 @@ const Cart = () => {
     console.log(cartproducts)
   return (
     <>
-     <div id="mainscreen">
+    <AuthProtected>
+    <div id="mainscreen">
         <div id="navbar">
             <div>
                 <img src="https://english.cdn.zeenews.com/sites/default/files/styles/zm_700x400/public/2021/01/30/913689-1.1.4-2.jpg?im=Resize=(1280,720)"
@@ -372,6 +374,7 @@ const Cart = () => {
             </div>
         </div>
     </div>
+    </AuthProtected>
     
     
     </>

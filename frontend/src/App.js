@@ -7,10 +7,12 @@ import Products from './Component/Products';
 import SingleProduct from './Component/SingleProduct';
 import Cart from './Component/Cart';
 import Addproduct from './Component/Addproduct';
+import Navbar from './Global/Navbar';
 
 function App() {
   return (
   <>
+  <Navbar />
   <Routes>
     <Route exact path="/register" element={<Register />} />
     <Route exact path="/login" element={<Login />} />
